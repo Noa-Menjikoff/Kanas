@@ -1,0 +1,63 @@
+.quiz-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+  }
+  
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  .kana-display {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 150px; /* Taille fixe pour bien centrer le symbole */
+    margin-bottom: 30px;
+  }
+  
+  .kana-symbol-quiz {
+    font-size: 6rem; /* Taille du symbole Kana */
+    font-weight: bold;
+  }
+  
+  .quiz-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .quiz-input {
+    padding: 10px;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    text-align: center;
+    width: 200px;
+  }
+  
+  .quiz-button {
+    padding: 10px 20px;
+    font-size: 1.2rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .quiz-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .quiz-stats {
+    margin-top: 20px;
+    font-size: 1.2rem;
+  }
+  
+  .quiz-stats p {
+    margin: 5px 0;
+  }
+  

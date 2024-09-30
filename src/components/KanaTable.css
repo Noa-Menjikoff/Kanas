@@ -1,0 +1,52 @@
+.kana-table-container {
+  text-align: center;
+  margin-top: 20px;
+  width: 100%;
+  overflow-x: auto; /* Permet de scroller horizontalement si nécessaire */
+}
+
+.kana-table {
+  margin: 0 auto;
+  border-collapse: collapse;
+  font-size: 1.2rem; /* Réduit légèrement la taille pour mieux tenir */
+  table-layout: fixed;
+  width: 100%; /* Utilise toute la largeur disponible */
+}
+
+.kana-table th,
+.kana-table td {
+  padding: 8px; /* Réduit la taille des cellules */
+  border: 1px solid #ddd;
+  text-align: center;
+  width: auto; /* Laisse les colonnes s'adapter au contenu */
+}
+
+.kana-symbol {
+  font-size: 1.5rem; /* Taille légèrement réduite pour s'adapter */
+}
+
+.kana-romaji {
+  color: #555;
+  font-size: 1rem;
+  margin-top: 5px;
+}
+
+h1 {
+  font-size: 2rem; /* Réduction de la taille du titre */
+  margin-bottom: 20px;
+}
+
+/* Media queries pour les petites tailles d'écran */
+@media (max-width: 768px) {
+  .kana-table {
+    font-size: 1rem; /* Réduction supplémentaire pour les petits écrans */
+  }
+
+  .kana-symbol {
+    font-size: 1.2rem;
+  }
+
+  .kana-romaji {
+    font-size: 0.9rem;
+  }
+}
