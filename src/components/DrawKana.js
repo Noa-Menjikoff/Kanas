@@ -75,7 +75,8 @@ const DrawKana = () => {
     context.lineWidth = size / 100; // Largeur des traits ajustée à la taille du canvas
   };
 
-  const startDrawing = ({ nativeEvent }) => {
+  const startDrawing = (nativeEvent) => {
+    nativeEvent.preventDefault(); // Empêche le scrolling sur les événements tactiles
     const { offsetX, offsetY } = adjustCoordinates(nativeEvent);
     contextRef.current.beginPath();
     contextRef.current.moveTo(offsetX, offsetY);
@@ -88,7 +89,8 @@ const DrawKana = () => {
     setIsDrawing(false);
   };
 
-  const draw = ({ nativeEvent }) => {
+  const draw = (nativeEvent) => {
+    nativeEvent.preventDefault(); // Empêche le scrolling sur les événements tactiles
     if (!isDrawing) return;
     const { offsetX, offsetY } = adjustCoordinates(nativeEvent);
     contextRef.current.lineTo(offsetX, offsetY);
