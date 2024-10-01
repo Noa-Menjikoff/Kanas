@@ -1,92 +1,77 @@
-.kana-selection-container {
-  display: flex;
-  justify-content: space-around;
-  margin-bottom: 20px;
-}
-
-.kana-table-column {
-  width: 45%;
-}
-
-.kana-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.kana-table th,
-.kana-table td {
-  padding: 10px;
-  border: 1px solid #ddd;
-  text-align: center;
-}
-
-.start-quiz-button {
-  display: inline-block;
-  padding: 10px 20px;
-  font-size: 1.2rem;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-top: 20px;
-}
-
-.start-quiz-button:hover {
-  background-color: #0056b3;
-}
-
-
-/* Styles pour la barre de navigation */
+/* Style pour la navbar */
 .navbar {
-  background-color: #014288;
-  padding: 10px;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  background-color: #333;
+  padding: 10px;
+  position: relative;
+}
+
+.logo-nav {
+  width: 100px;
 }
 
 .navbar-list {
-  list-style-type: none;
   display: flex;
-  justify-content: center;
-  padding: 0;
+  list-style-type: none;
   margin: 0;
+  padding: 0;
 }
 
 .navbar-list li {
-  margin: 0 15px;
+  margin-left: 20px;
 }
 
 .navbar-list a {
   color: white;
   text-decoration: none;
   font-size: 1.2rem;
-  transition: color 0.3s ease;
 }
 
-.navbar-list a:hover {
-  color: #ddd;
+.hamburger {
+  display: none;
+  font-size: 30px;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  z-index: 1000; /* Toujours visible au-dessus du menu */
 }
 
-/* Style pour les petites tailles d'écran */
-@media (max-width: 768px) {
+/* Responsive pour petits écrans */
+@media (max-width: 836px) {
+  .hamburger {
+    display: block;
+  }
+
   .navbar-list {
-    flex-direction: column;
-    align-items: center;
+    display: block;
+    position: absolute;
+    top: 60px;
+    left: 0;
+    width: 100%;
+    background-color: #333;
+    max-height: 0; /* Par défaut, le menu est caché */
+    overflow: hidden; /* Empêche le contenu du menu de déborder quand il est caché */
+    transition: max-height 0.5s ease-in-out; /* Animation d'ouverture et de fermeture */
+  }
+
+  .navbar-list.open {
+    max-height: 500px; /* Hauteur du menu lorsqu'il est ouvert */
   }
 
   .navbar-list li {
     margin: 10px 0;
+    text-align: center;
   }
 }
 
-.logo-nav {
-  width: 50px;
-  height: 50px;
-  margin-right: 10px;
+/* Grands écrans */
+@media (min-width: 837px) {
+  .navbar-list {
+    display: flex; /* Toujours visible sur grands écrans */
+    position: static; /* Remet la position à statique pour ne pas être absolue */
+    max-height: none; /* Désactivation de la hauteur limitée */
+  }
 }
-
