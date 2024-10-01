@@ -1,0 +1,40 @@
+.radical-page-container {
+    margin: 20px;
+    text-align: center;
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+  
+  /* Barre de recherche */
+  .radical-search {
+    padding: 10px;
+    font-size: 1.2rem;
+    width: 80%;
+    max-width: 500px;
+    margin-bottom: 20px;
+  }
+  
+  /* Tableau des radicaux */
+  .radical-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  
+  .radical-table th, .radical-table td {
+    padding: 15px;
+    border: 1px solid #ddd;
+  }
+  
+  .radical-table th {
+    background-color: #f5f5f5;
+  }
+  
+  .radical-table td {
+    text-align: center;
+    font-size: 1.5rem;
+  }
+  

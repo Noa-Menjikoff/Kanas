@@ -5,6 +5,8 @@ import KanaTableMultiColumn from './components/KanaTableMultiColumn'; // Tableau
 import Quiz from './components/Quiz'; // Quiz
 import KanaSelectionPage from './components/KanaSelectionPage'; // Sélection des Kanas avec bouton "Start Quiz"
 import KanjiPage from './components/KanjiPage'; // Page des Kanjis
+import RadicalPage from './components/RadicalPage';
+import DrawKana from './components/DrawKana';
 import hiraganaData from './data/hiragana'; // Données Hiragana
 import katakanaData from './data/katakana'; // Données Katakana
 import './App.css';
@@ -23,6 +25,8 @@ function App() {
             <li><Link to="/katakana">Katakana</Link></li>
             <li><Link to="/kana-selection">Start Quiz</Link></li>
             <li><Link to="/kanji">Kanjis</Link></li> {/* Lien vers la page des Kanjis */}
+            <li><Link to="/radicals">Radicaux</Link></li> {/* Ajout du lien vers la page des radicaux */}
+            <li><Link to="/draw-kana">Dessiner un Kana</Link></li>
           </ul>
         </nav>
 
@@ -33,6 +37,8 @@ function App() {
           <Route path="/kana-selection" element={<KanaSelectionPage selectedKanas={selectedKanas} setSelectedKanas={setSelectedKanas} />} />
           <Route path="/quiz" element={<Quiz selectedKanas={selectedKanas} />} />
           <Route path="/kanji" element={<KanjiPage />} /> {/* Route pour la page des Kanjis */}
+          <Route path="/radicals" element={<RadicalPage />} /> {/* Route pour la page des radicaux */}
+          <Route path="/draw-kana" element={<DrawKana />} />
         </Routes>
       </div>
     </Router>

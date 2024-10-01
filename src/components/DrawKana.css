@@ -1,0 +1,36 @@
+.draw-kana-container {
+    text-align: center;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+  }
+  
+  /* Le canevas est stylisé pour ressembler à une grille carrée */
+  .draw-canvas {
+    border: 2px solid black;
+    cursor: crosshair;
+    width: 400px; /* Même taille que le canevas JS */
+    height: 400px; /* Carré */
+  }
+  
+  .clear-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.2rem;
+  }
+  
+  .clear-button:hover {
+    background-color: #0056b3;
+  }
+  
