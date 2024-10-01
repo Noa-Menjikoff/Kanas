@@ -1,75 +1,78 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import '../css/DrawKana.css';
-import hiraganaData from '../data/hiragana'; // Importer les données Hiragana
-import katakanaData from '../data/katakana'; // Importer les données Katakana
+import hiraganaData from '../data/hiragana';
+import katakanaData from '../data/katakana';
 
 const DrawKana = () => {
   const canvasRef = useRef(null);
   const contextRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
-  const [currentKana, setCurrentKana] = useState(null); // Stocke le kana actuel
-  const [isValidated, setIsValidated] = useState(false); // Gérer l'état de validation
-  const [kanaType, setKanaType] = useState('hiragana'); // Par défaut, utiliser Hiragana
+  const [currentKana, setCurrentKana] = useState(null);
+  const [isValidated, setIsValidated] = useState(false);
+  const [kanaType, setKanaType] = useState('hiragana');
 
-  // Fonction pour aplatir les données imbriquées et retirer les kanas vides
+  // Fonction pour aplatir les données des kanas
   const flattenKanaData = (data) => {
     return data.flat().filter(kana => kana.symbol !== '');
   };
 
-  // Utiliser useCallback pour stabiliser la fonction clearCanvas
   const clearCanvas = useCallback(() => {
     const canvas = canvasRef.current;
     const context = contextRef.current;
     context.clearRect(0, 0, canvas.width, canvas.height);
-    drawGrid();
+    drawGrid(); // Redessiner la grille après avoir effacé le canvas
   }, []);
 
-  // Utiliser useCallback pour stabiliser la fonction generateNewKana
   const generateNewKana = useCallback(() => {
     const kanaList = kanaType === 'hiragana' ? flattenKanaData(hiraganaData) : flattenKanaData(katakanaData);
     if (kanaList.length === 0) return;
-    
+
     const randomKana = kanaList[Math.floor(Math.random() * kanaList.length)];
     setCurrentKana(randomKana);
     setIsValidated(false);
-    clearCanvas(); // Effacer le dessin précédent
-  }, [clearCanvas, kanaType]); // Dépend de clearCanvas et kanaType
+    clearCanvas(); // Effacer le canvas à chaque nouveau kana
+  }, [clearCanvas, kanaType]);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    const size = 400;
+    const size = Math.min(canvas.parentElement.offsetWidth * 0.9, 400); // Limite la taille max à 400px
     canvas.width = size;
     canvas.height = size;
 
     const context = canvas.getContext('2d');
     context.lineCap = 'round';
     context.strokeStyle = 'black';
-    context.lineWidth = 5;
+    context.lineWidth = size / 100; // Largeur des traits proportionnelle à la taille du canvas
     contextRef.current = context;
 
-    drawGrid();
-    generateNewKana(); // Générer un nouveau kana au chargement
-  }, [generateNewKana]); // Inclure generateNewKana comme dépendance
+    drawGrid(); // Dessiner la grille à l'initialisation
+    generateNewKana(); // Générer un kana à l'initialisation
+  }, [generateNewKana]);
 
+  // Fonction pour dessiner la grille
   const drawGrid = () => {
     const context = contextRef.current;
-    const size = 400;
+    const size = canvasRef.current.width;
 
-    context.clearRect(0, 0, size, size); // Efface l'ancienne grille
+    context.clearRect(0, 0, size, size); // Effacer le canvas avant de dessiner la grille
+
     context.strokeStyle = 'lightgray';
     context.lineWidth = 1;
+    // Ligne horizontale au milieu
     context.beginPath();
     context.moveTo(0, size / 2);
     context.lineTo(size, size / 2);
     context.stroke();
 
+    // Ligne verticale au milieu
     context.beginPath();
     context.moveTo(size / 2, 0);
     context.lineTo(size / 2, size);
     context.stroke();
 
+    // Réinitialiser la largeur des traits pour le dessin
     context.strokeStyle = 'black';
-    context.lineWidth = 5;
+    context.lineWidth = size / 100; // Largeur des traits ajustée à la taille du canvas
   };
 
   const startDrawing = ({ nativeEvent }) => {
@@ -77,7 +80,7 @@ const DrawKana = () => {
     contextRef.current.beginPath();
     contextRef.current.moveTo(offsetX, offsetY);
     setIsDrawing(true);
-    setIsValidated(false); // Réinitialiser la validation lors d'un nouveau dessin
+    setIsValidated(false);
   };
 
   const finishDrawing = () => {
@@ -97,21 +100,22 @@ const DrawKana = () => {
     const rect = canvas.getBoundingClientRect();
     const scaleX = canvas.width / rect.width;
     const scaleY = canvas.height / rect.height;
+    const clientX = nativeEvent.touches ? nativeEvent.touches[0].clientX : nativeEvent.clientX;
+    const clientY = nativeEvent.touches ? nativeEvent.touches[0].clientY : nativeEvent.clientY;
     return {
-      offsetX: (nativeEvent.clientX - rect.left) * scaleX,
-      offsetY: (nativeEvent.clientY - rect.top) * scaleY,
+      offsetX: (clientX - rect.left) * scaleX,
+      offsetY: (clientY - rect.top) * scaleY,
     };
   };
 
   const validateDrawing = () => {
-    setIsValidated(true); // Définir que le dessin a été validé
+    setIsValidated(true);
   };
 
   return (
     <div className="draw-kana-container">
       <h1>Dessiner le Kana</h1>
 
-      {/* Sélection des Hiragana et Katakana avec des radios */}
       <div className="kana-selection">
         <label>
           <input
@@ -135,7 +139,6 @@ const DrawKana = () => {
         </label>
       </div>
 
-      {/* Afficher le romaji du kana à dessiner */}
       {currentKana && <h2>Dessiner : {currentKana.romaji}</h2>}
 
       <canvas
@@ -144,6 +147,9 @@ const DrawKana = () => {
         onMouseUp={finishDrawing}
         onMouseMove={draw}
         onMouseLeave={finishDrawing}
+        onTouchStart={startDrawing}
+        onTouchEnd={finishDrawing}
+        onTouchMove={draw}
         className="draw-canvas"
       />
 
@@ -153,7 +159,6 @@ const DrawKana = () => {
         <button onClick={generateNewKana} className="new-kana-button">Nouveau Kana</button>
       </div>
 
-      {/* Afficher le kana correct après validation */}
       {isValidated && currentKana && (
         <div className="kana-result">
           <h3>Le Kana Correct :</h3>

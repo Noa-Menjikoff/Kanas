@@ -1,60 +1,96 @@
 .draw-kana-container {
-    text-align: center;
-    margin-top: 20px;
-  }
-  
-  h1 {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
-  }
-  
-  h2 {
-    font-size: 1.8rem;
-    margin-bottom: 15px;
-  }
-  
-  .kana-selection {
-    margin-bottom: 20px;
-  }
-  
-  .kana-selection label {
-    margin-right: 15px;
-    font-size: 1.2rem;
-  }
-  
+  text-align: center;
+  margin-top: 20px;
+  padding: 0 20px; /* Ajout de padding pour éviter que le contenu touche les bords */
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+.kana-selection {
+  margin-bottom: 20px;
+}
+
+.kana-selection label {
+  margin-right: 15px;
+  font-size: 1.2rem;
+}
+
+.draw-canvas {
+  border: 2px solid black;
+  cursor: crosshair;
+  max-width: 100%; /* Assure que le canvas ne dépasse pas la largeur de l'écran */
+  width: 100%;
+  height: auto;
+}
+
+.controls {
+  margin-top: 20px;
+}
+
+.clear-button, .validate-button, .new-kana-button {
+  padding: 10px 20px;
+  margin: 5px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.clear-button:hover, .validate-button:hover, .new-kana-button:hover {
+  background-color: #0056b3;
+}
+
+.kana-result {
+  margin-top: 20px;
+}
+
+.kana-display {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* Limite la taille du canvas sur les grands écrans */
+@media (min-width: 768px) {
   .draw-canvas {
-    border: 2px solid black;
-    cursor: crosshair;
-    width: 400px;
+    max-width: 400px; /* Limite la taille à 400px sur les écrans larges */
+    max-height: 400px;
+    width: 400px; /* Taille fixe pour les grands écrans */
     height: 400px;
   }
-  
-  .controls {
-    margin-top: 20px;
+}
+
+/* Media queries pour petits écrans */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 1.8rem;
   }
-  
+
+  h2 {
+    font-size: 1.3rem;
+  }
+
   .clear-button, .validate-button, .new-kana-button {
-    padding: 10px 20px;
-    margin: 5px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1.2rem;
+    font-size: 1rem;
+    padding: 8px 16px;
   }
-  
-  .clear-button:hover, .validate-button:hover, .new-kana-button:hover {
-    background-color: #0056b3;
-  }
-  
-  .kana-result {
-    margin-top: 20px;
-  }
-  
+
   .kana-display {
-    font-size: 4rem;
-    font-weight: bold;
-    margin-top: 10px;
+    font-size: 2.5rem;
   }
-  
+
+  .draw-canvas {
+    max-width: 100%; /* Le canvas occupe la largeur complète sur mobile */
+    height: auto; /* Ajuste la hauteur automatiquement en fonction de la largeur */
+  }
+}
