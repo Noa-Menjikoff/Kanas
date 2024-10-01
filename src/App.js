@@ -44,7 +44,7 @@ function App() {
           <Route path="/hiragana" element={<KanaTableMultiColumn data={hiraganaData} />} />
           <Route path="/katakana" element={<KanaTableMultiColumn data={katakanaData} />} />
           <Route path="/kana-selection" element={<KanaSelectionPage selectedKanas={selectedKanas} setSelectedKanas={setSelectedKanas} />} />
-          <Route path="/quiz" element={<Quiz selectedKanas={selectedKanas} />} />
+          <Route path="/quiz" element={<Quiz selectedKanas={selectedKanas} setSelectedKanas={setSelectedKanas} />} />
           <Route path="/kanji" element={<KanjiPage />} />
           <Route path="/radicals" element={<RadicalPage />} />
           <Route path="/draw-kana" element={<DrawKana />} />

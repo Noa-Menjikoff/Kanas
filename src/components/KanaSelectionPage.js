@@ -15,7 +15,7 @@ const KanaSelectionPage = ({ selectedKanas, setSelectedKanas }) => {
   };
 
   return (
-    <div>
+    <div className='div-selection-page'>
       <h1>Select Kana for Quiz</h1>
       <KanaSelectionTable selectedKanas={selectedKanas} setSelectedKanas={setSelectedKanas} />
       <button className="start-quiz-button" onClick={startQuiz}>

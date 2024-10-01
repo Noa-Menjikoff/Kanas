@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; // Pour rediriger l'utilisateur
 import hiraganaData from '../data/hiragana';
 import katakanaData from '../data/katakana';
 import '../css/Quiz.css'; // Assure-toi de créer ce fichier pour le style
 
-const Quiz = ({ selectedKanas }) => {
+const Quiz = ({ selectedKanas, setSelectedKanas }) => {
   const [quizData, setQuizData] = useState([]);
   const [currentKana, setCurrentKana] = useState(null);
   const [input, setInput] = useState('');
   const [score, setScore] = useState(0);
   const [errors, setErrors] = useState(0);
   const [totalAnswers, setTotalAnswers] = useState(0);
+  const navigate = useNavigate(); // Hook pour naviguer entre les pages
 
   // Filtrer les Kanas valides pour éviter les vides
   const filterValidKanas = (data) => {
@@ -35,6 +37,7 @@ const Quiz = ({ selectedKanas }) => {
     }
   }, [selectedKanas]);
 
+  // Gestion de la soumission du quiz
   const handleSubmit = (e) => {
     e.preventDefault();
     setTotalAnswers(totalAnswers + 1);
@@ -49,6 +52,15 @@ const Quiz = ({ selectedKanas }) => {
 
     // Passer à un autre caractère aléatoire
     setCurrentKana(quizData[Math.floor(Math.random() * quizData.length)]);
+  };
+
+  // Gérer la navigation quand l'utilisateur tente de quitter le quiz
+  const handleLeaveQuiz = () => {
+    const confirmLeave = window.confirm("Voulez-vous vraiment quitter le quiz ? Toutes les sélections seront réinitialisées.");
+    if (confirmLeave) {
+      setSelectedKanas([]); // Réinitialiser la sélection des Kanas
+      navigate('/'); // Rediriger vers la page d'accueil ou une autre page
+    }
   };
 
   if (quizData.length === 0) {
@@ -81,6 +93,9 @@ const Quiz = ({ selectedKanas }) => {
         <p>Wrong Answers: {errors}</p>
         <p>Total Answers: {totalAnswers}</p>
       </div>
+
+      {/* Bouton pour quitter le quiz */}
+      <button onClick={handleLeaveQuiz} className="quit-button">Quitter le quiz</button>
     </div>
   );
 };

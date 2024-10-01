@@ -60,4 +60,20 @@
   .quiz-stats p {
     margin: 5px 0;
   }
+
+  .quit-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.2rem;
+  }
+  
+  .quit-button:hover {
+    background-color: darkred;
+  }
+  
   

@@ -1,28 +1,32 @@
 .kana-table-container {
   text-align: center;
-  margin-top: 20px;
+  margin: 20px auto;
   width: 100%;
-  overflow-x: auto; /* Permet de scroller horizontalement si nécessaire */
+  max-width: 100%; /* Empêche le conteneur d'être trop large */
+  box-sizing: border-box; /* Assure que le padding est inclus dans la largeur totale */
+  padding: 0 20px; /* Ajoute un espace intérieur sur les côtés pour éviter que le tableau colle aux bords */
+  overflow-x: hidden; /* Empêche le défilement horizontal */
 }
 
 .kana-table {
   margin: 0 auto;
   border-collapse: collapse;
-  font-size: 1.2rem; /* Réduit légèrement la taille pour mieux tenir */
-  table-layout: fixed;
-  width: 100%; /* Utilise toute la largeur disponible */
+  font-size: 1.2rem;
+  width: 100%; /* Le tableau utilise toute la largeur disponible */
+  table-layout: fixed; /* Chaque colonne a une taille égale */
+  max-width: 100%; /* Limite la largeur totale du tableau pour ne pas dépasser */
 }
 
 .kana-table th,
 .kana-table td {
-  padding: 8px; /* Réduit la taille des cellules */
+  padding: 8px;
   border: 1px solid #ddd;
   text-align: center;
-  width: auto; /* Laisse les colonnes s'adapter au contenu */
+  word-wrap: break-word; /* Permet de couper les mots trop longs dans les cellules */
 }
 
 .kana-symbol {
-  font-size: 1.5rem; /* Taille légèrement réduite pour s'adapter */
+  font-size: 1.5rem;
 }
 
 .kana-romaji {
@@ -32,14 +36,18 @@
 }
 
 h1 {
-  font-size: 2rem; /* Réduction de la taille du titre */
+  font-size: 2rem;
   margin-bottom: 20px;
 }
 
 /* Media queries pour les petites tailles d'écran */
 @media (max-width: 768px) {
+  .kana-table-container {
+    padding: 0 15px; /* Réduit le padding sur les petits écrans */
+  }
+
   .kana-table {
-    font-size: 1rem; /* Réduction supplémentaire pour les petits écrans */
+    font-size: 1rem;
   }
 
   .kana-symbol {
@@ -48,5 +56,19 @@ h1 {
 
   .kana-romaji {
     font-size: 0.9rem;
+  }
+
+  .kana-table th, .kana-table td {
+    padding: 6px; /* Réduit l'espace à l'intérieur des cellules */
+  }
+}
+
+@media (max-width: 480px) {
+  .kana-symbol {
+    font-size: 1rem; /* Réduction supplémentaire pour les écrans très petits */
+  }
+
+  .kana-romaji {
+    font-size: 0.8rem;
   }
 }
