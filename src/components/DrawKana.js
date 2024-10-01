@@ -40,7 +40,7 @@ const DrawKana = () => {
 
     drawGrid();
     generateNewKana(); // Générer un nouveau kana au chargement
-  }, [generateNewKana]);
+  }, []);
 
   const drawGrid = () => {
     const context = contextRef.current;
