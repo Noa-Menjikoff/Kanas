@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import radicalsData from '../data/radicals'; // Assurez-vous que ce fichier contient les radicaux.
-import './RadicalPage.css'; // Pour le style
+import '../css/RadicalPage.css'; // Pour le style
 
 const RadicalPage = () => {
   const [searchTerm, setSearchTerm] = useState(''); // Gérer la recherche

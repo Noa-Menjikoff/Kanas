@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import hiraganaData from '../data/hiragana';
 import katakanaData from '../data/katakana';
-import './Quiz.css'; // Assure-toi de créer ce fichier pour le style
+import '../css/Quiz.css'; // Assure-toi de créer ce fichier pour le style
 
 const Quiz = ({ selectedKanas }) => {
   const [quizData, setQuizData] = useState([]);

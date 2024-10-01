@@ -1,0 +1,32 @@
+.home-container {
+  text-align: center;
+  margin-top: 50px;
+  padding: 20px;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+ul {
+  text-align: left;
+  display: inline-block;
+  font-size: 1.2rem;
+  line-height: 1.8;
+}
+
+.home-image {
+  margin-top: 30px;
+}
+
+.home-image img {
+  width: 200px;
+  height: auto;
+}

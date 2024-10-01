@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import './DrawKana.css';
+import '../css/DrawKana.css';
 import hiraganaData from '../data/hiragana'; // Importer les données Hiragana
 import katakanaData from '../data/katakana'; // Importer les données Katakana
 

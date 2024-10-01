@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import KanaSelectionTable from './KanaSelectionTable';
-import './KanaSelectionPage.css';
+import '../css/KanaSelectionPage.css';
 
 const KanaSelectionPage = ({ selectedKanas, setSelectedKanas }) => {
   const navigate = useNavigate();

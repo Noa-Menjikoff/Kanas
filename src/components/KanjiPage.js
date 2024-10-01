@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import kanjiData from '../data/kanji'; // Import des données des Kanjis triés par niveau
-import './KanjiPage.css'; // Styles de la page des Kanjis
+import '../css/KanjiPage.css'; // Styles de la page des Kanjis
 
 const KanjiPage = () => {
   const [searchTerm, setSearchTerm] = useState(''); // Gère la barre de recherche

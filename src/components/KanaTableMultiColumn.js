@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import './KanaTable.css'; // Styles du tableau
+import '../css/KanaTable.css'; // Styles du tableau
 
 const KanaTableMultiColumn = ({ data }) => {
   const navigate = useNavigate(); // Hook pour gérer la navigation

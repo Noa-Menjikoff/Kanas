@@ -1,7 +1,7 @@
 import React from 'react';
 import hiraganaData from '../data/hiragana';
 import katakanaData from '../data/katakana';
-import './KanaTable.css'; // Styles
+import '../css/KanaTable.css'; // Styles
 
 const KanaSelectionTable = ({ selectedKanas, setSelectedKanas }) => {
   const handleCheckboxChange = (groupName, index, isChecked) => {
