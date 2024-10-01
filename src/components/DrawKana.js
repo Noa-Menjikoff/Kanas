@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import '../css/DrawKana.css';
 import hiraganaData from '../data/hiragana'; // Importer les données Hiragana
 import katakanaData from '../data/katakana'; // Importer les données Katakana
@@ -16,15 +16,24 @@ const DrawKana = () => {
     return data.flat().filter(kana => kana.symbol !== '');
   };
 
-  // Combiner les hiragana ou katakana en fonction du type sélectionné
-  const getKanaList = () => {
-    if (kanaType === 'hiragana') {
-      return flattenKanaData(hiraganaData);
-    } else if (kanaType === 'katakana') {
-      return flattenKanaData(katakanaData);
-    }
-    return [];
-  };
+  // Utiliser useCallback pour stabiliser la fonction clearCanvas
+  const clearCanvas = useCallback(() => {
+    const canvas = canvasRef.current;
+    const context = contextRef.current;
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    drawGrid();
+  }, []);
+
+  // Utiliser useCallback pour stabiliser la fonction generateNewKana
+  const generateNewKana = useCallback(() => {
+    const kanaList = kanaType === 'hiragana' ? flattenKanaData(hiraganaData) : flattenKanaData(katakanaData);
+    if (kanaList.length === 0) return;
+    
+    const randomKana = kanaList[Math.floor(Math.random() * kanaList.length)];
+    setCurrentKana(randomKana);
+    setIsValidated(false);
+    clearCanvas(); // Effacer le dessin précédent
+  }, [clearCanvas, kanaType]); // Dépend de clearCanvas et kanaType
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -40,7 +49,7 @@ const DrawKana = () => {
 
     drawGrid();
     generateNewKana(); // Générer un nouveau kana au chargement
-  }, []);
+  }, [generateNewKana]); // Inclure generateNewKana comme dépendance
 
   const drawGrid = () => {
     const context = contextRef.current;
@@ -94,27 +103,8 @@ const DrawKana = () => {
     };
   };
 
-  const clearCanvas = () => {
-    const canvas = canvasRef.current;
-    const context = contextRef.current;
-    context.clearRect(0, 0, canvas.width, canvas.height);
-    drawGrid();
-  };
-
   const validateDrawing = () => {
     setIsValidated(true); // Définir que le dessin a été validé
-  };
-
-  const generateNewKana = () => {
-    const kanaList = getKanaList();
-    if (kanaList.length === 0) {
-      setCurrentKana(null); // Aucun kana sélectionné si aucune option n'est cochée
-      return;
-    }
-    const randomKana = kanaList[Math.floor(Math.random() * kanaList.length)];
-    setCurrentKana(randomKana); // Choisir un nouveau kana aléatoire
-    setIsValidated(false); // Réinitialiser la validation lors d'un nouveau kana
-    clearCanvas(); // Effacer le dessin précédent
   };
 
   return (
