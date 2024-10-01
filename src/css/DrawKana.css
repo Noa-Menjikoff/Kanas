@@ -90,7 +90,12 @@ h2 {
   }
 
   .draw-canvas {
-    max-width: 100%; /* Le canvas occupe la largeur complète sur mobile */
-    height: auto; /* Ajuste la hauteur automatiquement en fonction de la largeur */
+    border: 2px solid black;
+    cursor: crosshair;
+    max-width: 100%; /* Le canvas s'adapte à la largeur */
+    width: 100%;
+    height: auto;
+    touch-action: none; /* Empêche le scrolling et le zoom sur les appareils tactiles */
   }
+  
 }
