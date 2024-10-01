@@ -19,6 +19,7 @@ function App() {
       <div className="App">
         {/* Barre de navigation */}
         <nav className="navbar">
+        <img src={`${process.env.PUBLIC_URL}/logo_nihongo.png`} alt="logo" className='logo-nav'/>
           <ul className="navbar-list">
             <li><Link to="/">Home</Link></li>
             <li><Link to="/hiragana">Hiragana</Link></li>

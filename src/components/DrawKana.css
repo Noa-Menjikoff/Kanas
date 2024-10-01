@@ -1,9 +1,6 @@
 .draw-kana-container {
     text-align: center;
     margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
   }
   
   h1 {
@@ -11,17 +8,34 @@
     margin-bottom: 20px;
   }
   
-  /* Le canevas est stylisé pour ressembler à une grille carrée */
+  h2 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+  }
+  
+  .kana-selection {
+    margin-bottom: 20px;
+  }
+  
+  .kana-selection label {
+    margin-right: 15px;
+    font-size: 1.2rem;
+  }
+  
   .draw-canvas {
     border: 2px solid black;
     cursor: crosshair;
-    width: 400px; /* Même taille que le canevas JS */
-    height: 400px; /* Carré */
+    width: 400px;
+    height: 400px;
   }
   
-  .clear-button {
+  .controls {
     margin-top: 20px;
+  }
+  
+  .clear-button, .validate-button, .new-kana-button {
     padding: 10px 20px;
+    margin: 5px;
     background-color: #007bff;
     color: white;
     border: none;
@@ -30,7 +44,17 @@
     font-size: 1.2rem;
   }
   
-  .clear-button:hover {
+  .clear-button:hover, .validate-button:hover, .new-kana-button:hover {
     background-color: #0056b3;
+  }
+  
+  .kana-result {
+    margin-top: 20px;
+  }
+  
+  .kana-display {
+    font-size: 4rem;
+    font-weight: bold;
+    margin-top: 10px;
   }
   
