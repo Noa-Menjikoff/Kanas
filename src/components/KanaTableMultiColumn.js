@@ -1,9 +1,11 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 import '../css/KanaTable.css'; // Styles du tableau
 
 const KanaTableMultiColumn = ({ data }) => {
-  const location = useLocation(); // Obtenir l'URL actuelle
+  const location = useLocation();
 
   // Déterminer le titre en fonction de l'URL
   const getTitle = () => {
@@ -12,14 +14,39 @@ const KanaTableMultiColumn = ({ data }) => {
     } else if (location.pathname.includes('katakana')) {
       return 'Katakana Table';
     } else {
-      return 'Kana Table'; // Valeur par défaut si aucun des deux
+      return 'Kana Table';
     }
+  };
+
+  // Fonction pour télécharger le tableau en PDF
+  const downloadPDF = () => {
+    const input = document.getElementById('kana-table'); // Sélectionner l'élément du tableau à capturer
+
+    // Utiliser html2canvas pour capturer le contenu du tableau en image
+    html2canvas(input)
+      .then((canvas) => {
+        const imgData = canvas.toDataURL('image/png'); // Convertir le canvas en image
+        const pdf = new jsPDF('p', 'mm', 'a4'); // Créer un document PDF
+
+        const imgWidth = 190;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        let position = 10;
+
+        pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+        pdf.save(`${getTitle()}.pdf`);
+      })
+      .catch((error) => {
+        console.error('Erreur lors de la génération du PDF :', error);
+      });
   };
 
   return (
     <div className="kana-table-container">
-      <h1>{getTitle()}</h1> {/* Affiche Hiragana ou Katakana selon la page */}
-      <table className="kana-table">
+      <h1>{getTitle()}</h1>
+      {/* Bouton pour télécharger le tableau en PDF */}
+      <button onClick={downloadPDF} className="download-button">Télécharger en PDF</button>
+
+      <table className="kana-table" id="kana-table">
         <thead>
           <tr>
             <th>a</th>
@@ -35,12 +62,12 @@ const KanaTableMultiColumn = ({ data }) => {
               {row.map((kana, index) => (
                 <td key={index} className="kana-symbol">
                   {kana.symbol ? (
-                    <>
+                    <React.Fragment>
                       <div>{kana.symbol}</div>
                       <div className="kana-romaji">{kana.romaji}</div>
-                    </>
+                    </React.Fragment>
                   ) : (
-                    <div>&nbsp;</div> // Affichage d'un espace pour les cellules vides
+                    <span>&nbsp;</span> // Utilisation de `span` au lieu de `div` pour espaces vides
                   )}
                 </td>
               ))}
