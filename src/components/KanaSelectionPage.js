@@ -5,6 +5,7 @@ import '../css/KanaSelectionPage.css';
 
 const KanaSelectionPage = ({ selectedKanas, setSelectedKanas }) => {
   const navigate = useNavigate();
+  
 
   const startQuiz = () => {
     if (selectedKanas.length === 0) {
@@ -15,6 +16,7 @@ const KanaSelectionPage = ({ selectedKanas, setSelectedKanas }) => {
   };
 
   return (
+    console.log(selectedKanas),
     <div className='div-selection-page'>
       <h1>Select Kana for Quiz</h1>
       <KanaSelectionTable selectedKanas={selectedKanas} setSelectedKanas={setSelectedKanas} />

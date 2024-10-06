@@ -14,6 +14,11 @@ const KanaSelectionTable = ({ selectedKanas, setSelectedKanas }) => {
     }
   };
 
+  // Fonction qui vérifie si le kana est déjà dans selectedKanas
+  const inSelectedKanas = (groupName, index) => {
+    return selectedKanas.some((k) => k.groupName === groupName && k.index === index);
+  };
+
   const renderTable = (data, groupName) => {
     return (
       <table className="kana-table">
@@ -33,6 +38,7 @@ const KanaSelectionTable = ({ selectedKanas, setSelectedKanas }) => {
               <td>
                 <input
                   type="checkbox"
+                  checked={inSelectedKanas(groupName, rowIndex)} // Case cochée si déjà sélectionnée
                   onChange={(e) =>
                     handleCheckboxChange(groupName, rowIndex, e.target.checked)
                   }

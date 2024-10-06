@@ -1,3 +1,25 @@
 .div-selection-page{
     margin : 10px
 }
+
+.kana-table{
+    width: 80%;
+}
+
+.kana-selection-container{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+@media screen and (max-width: 650px) {
+    .kana-table{
+        width: 100%;
+    }
+
+    .kana-selection-container{
+        flex-wrap: wrap;
+
+    }
+}

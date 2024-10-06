@@ -76,4 +76,24 @@
     background-color: darkred;
   }
   
+  .error-text {
+    color: red;
+    font-size: 1.5rem;
+  }
+  
+  .correct-answer {
+    color: green;
+  }
+  .quiz-input.error {
+    border-color: red;
+  }
+  
+  .quiz-feedback {
+    margin-top: 10px;
+    color: red;
+    font-size: 1.2rem;
+  }
+  
+
+
   
