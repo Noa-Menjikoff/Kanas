@@ -8,13 +8,10 @@ const DrawKana = () => {
   const contextRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [currentKana, setCurrentKana] = useState(null);
-  const [isValidated, setIsValidated] = useState(false);
   const [kanaType, setKanaType] = useState('hiragana');
 
   // Fonction pour aplatir les données des kanas
-  const flattenKanaData = (data) => {
-    return data.flat().filter(kana => kana.symbol !== '');
-  };
+  const flattenKanaData = (data) => data.flat().filter(kana => kana.symbol !== '');
 
   const clearCanvas = useCallback(() => {
     const canvas = canvasRef.current;
@@ -29,7 +26,6 @@ const DrawKana = () => {
 
     const randomKana = kanaList[Math.floor(Math.random() * kanaList.length)];
     setCurrentKana(randomKana);
-    setIsValidated(false);
     clearCanvas(); // Effacer le canvas à chaque nouveau kana
   }, [clearCanvas, kanaType]);
 
@@ -39,7 +35,7 @@ const DrawKana = () => {
     canvas.width = size;
     canvas.height = size;
 
-    const context = canvas.getContext('2d');
+    const context = canvas.getContext('2d', { willReadFrequently: true });
     context.lineCap = 'round';
     context.strokeStyle = 'black';
     context.lineWidth = size / 100; // Largeur des traits proportionnelle à la taille du canvas
@@ -81,7 +77,6 @@ const DrawKana = () => {
     contextRef.current.beginPath();
     contextRef.current.moveTo(offsetX, offsetY);
     setIsDrawing(true);
-    setIsValidated(false);
   };
 
   const finishDrawing = () => {
@@ -111,7 +106,20 @@ const DrawKana = () => {
   };
 
   const validateDrawing = () => {
-    setIsValidated(true);
+    drawCorrectKana(); // Dessiner le kana correct en arrière-plan
+  };
+
+  // Dessiner le kana correct en arrière-plan (translucide)
+  const drawCorrectKana = () => {
+    if (!currentKana) return;
+    const context = contextRef.current;
+    context.save(); // Sauvegarder l'état actuel du contexte
+    context.globalAlpha = 0.3; // Transparence pour que le dessin reste visible
+    context.font = `${canvasRef.current.width * 0.6}px Arial`; // Taille du kana en fonction du canvas
+    context.textAlign = 'center';
+    context.textBaseline = 'middle';
+    context.fillText(currentKana.symbol, canvasRef.current.width / 2, canvasRef.current.height / 2);
+    context.restore(); // Restaurer l'état initial du contexte
   };
 
   return (
@@ -160,13 +168,6 @@ const DrawKana = () => {
         <button onClick={validateDrawing} className="validate-button">Valider</button>
         <button onClick={generateNewKana} className="new-kana-button">Nouveau Kana</button>
       </div>
-
-      {isValidated && currentKana && (
-        <div className="kana-result">
-          <h3>Le Kana Correct :</h3>
-          <div className="kana-display">{currentKana.symbol}</div>
-        </div>
-      )}
     </div>
   );
 };
