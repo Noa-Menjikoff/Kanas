@@ -9,6 +9,7 @@ import RadicalPage from './components/RadicalPage';
 import DrawKana from './components/DrawKana';
 import hiraganaData from './data/hiragana'; // Données Hiragana
 import katakanaData from './data/katakana'; // Données Katakana
+import TextPage from './components/TextPage';
 import './App.css';
 
 function App() {
@@ -36,6 +37,7 @@ function App() {
             <li><Link to="/kanji" onClick={toggleMenu}>Kanjis</Link></li>
             <li><Link to="/radicals" onClick={toggleMenu}>Radicaux</Link></li>
             <li><Link to="/draw-kana" onClick={toggleMenu}>Dessiner un Kana</Link></li>
+            <li><Link to="/texts" onClick={toggleMenu}>Textes</Link></li>
           </ul>
         </nav>
 
@@ -48,6 +50,7 @@ function App() {
           <Route path="/kanji" element={<KanjiPage />} />
           <Route path="/radicals" element={<RadicalPage />} />
           <Route path="/draw-kana" element={<DrawKana />} />
+          <Route path="/texts" element={<TextPage />} />
         </Routes>
       </div>
     </Router>
