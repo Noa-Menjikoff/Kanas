@@ -23,7 +23,7 @@
   margin-left: 20px;
 }
 
-.navbar-list a {
+.navbar-list li a {
   color: white;
   text-decoration: none;
   font-size: 1.2rem;
@@ -74,4 +74,51 @@
     position: static; /* Remet la position à statique pour ne pas être absolue */
     max-height: none; /* Désactivation de la hauteur limitée */
   }
+}
+
+/* Styles pour le container de la photo de profil */
+.profile-container {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  margin-left: 20px;
+}
+
+/* Style de la photo de profil */
+.profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+}
+
+/* Styles du menu déroulant */
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  right: 0;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  border-radius: 5px;
+}
+
+/* Styles des éléments du menu */
+.dropdown-item {
+  color: black;  /* Assure que le texte est visible en noir */
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  font-size: 14px;
+}
+
+/* Hover effect for better UX */
+.dropdown-item:hover {
+  background-color: #ddd;
+}
+
+/* Afficher le menu lors du survol */
+.profile-container:hover .dropdown-menu {
+  display: block;
 }
