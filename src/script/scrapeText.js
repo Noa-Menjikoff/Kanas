@@ -2,59 +2,101 @@ const axios = require('axios');
 const cheerio = require('cheerio');
 const fs = require('fs');
 
-// URL de la page des œuvres (par exemple, de Natsume Soseki)
+// URL of the Aozora Bunko works list page (for Natsume Soseki in this example)
 const baseURL = 'https://www.aozora.gr.jp';
-const url = `${baseURL}/index_pages/person81.html`; // Exemple de page pour un auteur spécifique
+const url = `${baseURL}/index_pages/person81.html`; // Example author page
 
-// Fonction pour récupérer les textes
+// Function to fetch and parse the webpage
 async function fetchTexts() {
   try {
     const { data } = await axios.get(url);
     const $ = cheerio.load(data);
 
     const texts = [];
-
-    // Sélection des éléments contenant les titres et les premiers liens
     const links = $('ol > li > a');
 
-    // Parcours des liens récupérés pour accéder aux pages des œuvres complètes
-    for (let i = 0; i < links.length; i++) {
+    for (let i = 0; i < links.length && texts.length < 10; i++) { // Limiting to 10 works
       const title = $(links[i]).text().trim();
       const partialLink = $(links[i]).attr('href');
       const workPageURL = `${baseURL}/${partialLink}`;
 
-      // Récupération du lien du texte complet depuis la page de l'œuvre
+      console.log(`Fetching link for: ${title}`);
       const textLink = await fetchTextLink(workPageURL);
+      const textContent = await fetchTextContent(textLink);
       if (textLink) {
-        texts.push({ title, textLink });
+        texts.push({ title, textLink , textContent });
+        console.log(`Retrieved link for ${title}: ${textLink}`);
       }
+
+      // Adding delay to avoid overloading the site
     }
 
-    // Écriture des résultats dans un fichier JSON
+    // Write the result to a JSON file
     fs.writeFileSync('texts.json', JSON.stringify(texts, null, 2));
-    console.log('Textes récupérés et enregistrés dans texts.json');
+    console.log('Texts fetched and saved in texts.json');
   } catch (error) {
-    console.error('Erreur lors de la récupération des textes :', error);
+    console.error('Error fetching texts:', error);
   }
 }
 
-// Fonction pour récupérer le lien du texte complet sur la page d'une œuvre
+// Function to fetch the direct text link on the work's page
 async function fetchTextLink(workPageURL) {
   try {
     const { data } = await axios.get(workPageURL);
     const $ = cheerio.load(data);
 
-    // Sélection du lien qui mène au fichier texte complet (HTML, EPUB, etc.)
-    const downloadLink = $('a[href$=".html"], a[href$=".txt"]').attr('href');
+    // Selecting the link that contains the final text
+    const partialFileLink = $('a[href^="./files/"][href$=".html"]').attr('href');
     
-    if (downloadLink) {
-      return `${baseURL}/${downloadLink}`;
+    if (partialFileLink) {
+      // Constructing the final link by extracting the proper 'cards' directory from the URL
+      const workID = workPageURL.split('/').slice(-2, -1)[0]; // Extracts the "cards/000081" part from the URL
+      const finalLink = `${baseURL}/cards/${workID}/${partialFileLink.substring(2)}`; // Builds the final link
+      return finalLink;
+    } else {
+      console.log(`No download link found for ${workPageURL}`);
     }
   } catch (error) {
-    console.error(`Erreur lors de la récupération du lien sur ${workPageURL}:`, error);
+    console.error(`Error fetching the link on ${workPageURL}:`, error);
   }
   return null;
 }
 
-// Lancement de la fonction
+const iconv = require('iconv-lite'); // Install this package: npm install iconv-lite
+
+async function fetchTextContent(textLink) {
+  try {
+    // Use responseType 'arraybuffer' to avoid automatic string conversion
+    const { data } = await axios.get(textLink, { responseType: 'arraybuffer' });
+
+    // Decode the response using Shift-JIS encoding
+    const decodedData = iconv.decode(Buffer.from(data), 'shift_jis');
+    
+    // Load the decoded HTML into Cheerio
+    const $ = cheerio.load(decodedData);
+
+    // Extract metadata and main text
+    const metadata = $('.metadata').text().trim();
+
+    // Process the main text to preserve line breaks
+    let mainText = $('.main_text')
+      .html() // Get the HTML content instead of plain text
+      .replace(/<br\s*\/?>/gi, '\n') // Replace <br> tags with line breaks
+      .replace(/<\/p>/gi, '\n')      // Add line breaks after each </p>
+      .replace(/<\/?[^>]+(>|$)/g, '') // Strip remaining HTML tags
+      .trim(); // Trim the result
+
+    return { metadata, mainText };
+  } catch (error) {
+    console.error('Error fetching text content:', error);
+    return null;
+  }
+}
+
+
+
+
+
+
+// Run the function
 fetchTexts();
