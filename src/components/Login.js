@@ -55,10 +55,10 @@ const Login = ({ setSession }) => {
   return (
     <div className="login-container">
       <h1>Login</h1>
-      <form onSubmit={handleLogin}>
+      <form onSubmit={handleLogin} className='auth'>
         <input
           type="text"
-          placeholder="Email or Username"
+          placeholder="Email"
           value={identifier}
           onChange={(e) => setIdentifier(e.target.value)}
           required
@@ -70,7 +70,7 @@ const Login = ({ setSession }) => {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button type="submit">Login</button>
+        <button type="submit" className='Button-auth'>Login</button>
       </form>
       {errorMessage && <p className="error">{errorMessage}</p>}
     </div>
