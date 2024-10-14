@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { supabase } from '../supabaseClient'; // Assurez-vous que supabaseClient est bien importé
-
+import '../css/TextPage.css';
 const TextsPage = () => {
   const [texts, setTexts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -45,7 +45,7 @@ const TextsPage = () => {
   return (
     <div>
       <h1>List of Texts</h1>
-      <ul>
+      <ul className='list-texts'>
         {texts.length > 0 ? (
           texts.map((text) => (
             <li key={text.id}>

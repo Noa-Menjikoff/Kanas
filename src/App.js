@@ -18,6 +18,7 @@ import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import Settings from './components/Settings';
 
+
 import profilePic from './img/utilisateur.png';
 import './App.css';
 

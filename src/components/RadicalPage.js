@@ -1,45 +1,74 @@
 import React, { useState } from 'react';
-import radicalsData from '../data/radicals'; // Assurez-vous que ce fichier contient les radicaux.
-import '../css/RadicalPage.css'; // Pour le style
+import radicalsData from '../data/radicalsData'; // Import the radicals data (grouped by WaniKani levels)
+import '../css/RadicalPage.css'; // Styles for the Radicals page
 
-const RadicalPage = () => {
-  const [searchTerm, setSearchTerm] = useState(''); // Gérer la recherche
+const RadicalsPage = () => {
+  const [searchTerm, setSearchTerm] = useState(''); // State to handle search input
+  const [selectedLevel, setSelectedLevel] = useState(''); // State to handle filtering by level
 
-  // Fonction pour filtrer les radicaux en fonction du terme recherché
+  // Function to filter radicals based on the search term and level filter
   const filterRadicals = () => {
-    return radicalsData.filter(radical =>
-      radical.radical.includes(searchTerm) || radical.meaning.includes(searchTerm)
-    );
+    let filteredRadicals = [];
+
+    // Loop through levels to find the corresponding radicals
+    Object.keys(radicalsData).forEach(level => {
+      if (selectedLevel === '' || selectedLevel === level) {
+        filteredRadicals = [
+          ...filteredRadicals,
+          ...radicalsData[level].filter(radical =>
+            radical.radical.includes(searchTerm) || radical.signification.includes(searchTerm)
+          ),
+        ];
+      }
+    });
+
+    return filteredRadicals;
   };
 
   return (
-    <div className="radical-page-container">
+    <div className="radicals-page-container">
       <h1>Liste des Radicaux</h1>
 
-      {/* Barre de recherche */}
+      {/* Search Bar */}
       <input
         type="text"
         placeholder="Rechercher un radical ou une signification..."
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        className="radical-search"
+        className="radicals-search"
       />
 
-      {/* Liste des radicaux */}
-      <table className="radical-table">
+      {/* Filter by WaniKani Level */}
+      <select
+        value={selectedLevel}
+        onChange={(e) => setSelectedLevel(e.target.value)}
+        className="radicals-filter"
+      >
+        <option value="">Tous les niveaux</option>
+        {Object.keys(radicalsData).map(level => (
+          <option key={level} value={level}>
+            Niveau {level}
+          </option>
+        ))}
+      </select>
+
+      {/* Display the radicals in a table */}
+      <table className="radicals-table">
         <thead>
           <tr>
-            <th>Numéro</th>
             <th>Radical</th>
+            <th>Niveau</th>
             <th>Signification</th>
+            <th>Description</th>
           </tr>
         </thead>
         <tbody>
           {filterRadicals().map((radical, index) => (
             <tr key={index}>
-              <td>{radical.number}</td>
               <td>{radical.radical}</td>
-              <td>{radical.meaning}</td>
+              <td>{selectedLevel || Object.keys(radicalsData).find(level => radicalsData[level].includes(radical))}</td>
+              <td>{radical.signification}</td>
+              <td>{radical.description}</td>
             </tr>
           ))}
         </tbody>
@@ -48,4 +77,4 @@ const RadicalPage = () => {
   );
 };
 
-export default RadicalPage;
+export default RadicalsPage;

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import kanjiData from '../data/kanji'; // Import des données des Kanjis triés par niveau
+import kanjiData from '../data/kanjiData'; // Import des données des Kanjis triés par niveau
 import '../css/KanjiPage.css'; // Styles de la page des Kanjis
 
 const KanjiPage = () => {
@@ -45,11 +45,11 @@ const KanjiPage = () => {
         className="kanji-filter"
       >
         <option value="">Tous les niveaux</option>
-        <option value="N1">N1</option>
-        <option value="N2">N2</option>
-        <option value="N3">N3</option>
-        <option value="N4">N4</option>
-        <option value="N5">N5</option>
+        {Object.keys(kanjiData).map(level => (
+          <option key={level} value={level}>
+            Niveau {level}
+          </option>
+        ))}
       </select>
 
       {/* Liste des Kanjis */}
