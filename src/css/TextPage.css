@@ -13,14 +13,21 @@ h1 {
   margin: 0;
 }
 
-.list-texts li {
+.list-texts li div{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+.linkP{
   background-color: white;
-  margin: 10px auto;
-  padding: 15px;
-  max-width: 600px;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
+  padding: 10px;
+  margin: 10px;
+  width: 20vw;
 }
 
 /* Link Styles */
@@ -31,7 +38,7 @@ h1 {
   font-weight: bold;
 }
 
-.list-texts li:hover {
+.linkP:hover {
   transform: translateY(-3px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
@@ -41,7 +48,7 @@ h1 {
 }
 
 /* No Texts Available Message */
-.list-texts p {
+.list-texts > p {
   text-align: center;
   color: #666;
   font-size: 1.1em;
